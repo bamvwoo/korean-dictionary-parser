@@ -1,7 +1,7 @@
 const targetTypes = [ "명사", "형용사" ];
 
-let nouns = "";
-let adjectives = "";
+let nouns = "value";
+let adjectives = "value";
 
 const valueSet = new Set();
 
@@ -43,9 +43,9 @@ document.getElementById('fileInput').addEventListener('change', async function(e
 
                 // Append each chunk to output
                 if (type === "명사") {
-                    nouns += value + ",";
+                    nouns += value + "\n";
                 } else if (type === "형용사") {
-                    adjectives += value + ",";
+                    adjectives += value + "\n";
                 }
             }
     
@@ -62,16 +62,10 @@ document.getElementById('fileInput').addEventListener('change', async function(e
 });
 
 document.getElementById('saveNouns').addEventListener('click', function() {
-    if (nouns.endsWith(",")) {
-        nouns = nouns.slice(0, -1);
-    }
     appendToFile("nouns", nouns);
 });
 
 document.getElementById('saveAdjectives').addEventListener('click', function() {
-    if (adjectives.endsWith(",")) {
-        adjectives = adjectives.slice(0, -1);
-    }
     appendToFile("adjectives", adjectives);
 });
 
