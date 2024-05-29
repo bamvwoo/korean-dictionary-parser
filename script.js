@@ -1,7 +1,7 @@
 const targetTypes = [ "명사", "형용사" ];
 
-let nouns = "value";
-let adjectives = "value";
+let nouns = "value\n";
+let adjectives = "value\n";
 
 const valueSet = new Set();
 
