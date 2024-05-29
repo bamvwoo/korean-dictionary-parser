@@ -28,6 +28,7 @@ document.getElementById('fileInput').addEventListener('change', async function(e
             let value;
             if (type === "명사") {
                 value = chunk.Lemma.feat.val;
+                if (value.endsWith("적")) return;       // 형용사적 명사 제외
             } else if (type === "형용사") {
                 value = chunk.WordForm[1].feat.filter(feat => feat.att === "writtenForm")[0].val;
             }
