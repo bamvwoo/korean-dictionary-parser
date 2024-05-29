@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 50vw;
+    }
+
+    #wrapper > h1 {
+        margin-bottom: 20px;
+    }
+
+    #wrapper > * {
+        margin-bottom: 10px;
+    }
+
+    #outputContainer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #outputContainer > div {
+        display: flex;
+        flex-direction: column;
+        margin-right: 10px;
+        flex: 1;
+        height: 500px;
+    }
+
+    #outputContainer > div > textarea {
+        flex: 1;
+        width: 100%;
+    }
+</style>
+<body>
+    <div id="wrapper">
+        <h1>한국어 기초사전 Parser</h1>
+        <div>
+            <label for="minLength">최소 글자수</label>
+            <input type="number" id="minLength" name="minLength" value="1">
+        </div>
+        <input type="file" id="fileInput" accept=".json">
+        <div id="outputContainer">
+            <div>
+                <h3>명사</h3>
+                <textarea id="nounsOutput"></textarea>
+                <button id="saveNouns">저장</button>
+            </div>
+            <div>
+                <h3>형용사</h3>
+                <textarea id="adjectivesOutput"></textarea>
+                <button id="saveAdjectives">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/oboe.js/2.1.5/oboe-browser.js" integrity="sha512-poD1XFe+O28Byma67GWfiQ16LarA7xRSxmg23212kPO32Ft8W2BkiNkGcCpZ3p0xdOlHbVS9IvVyVRe6NkI3sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</body>
+</html>
