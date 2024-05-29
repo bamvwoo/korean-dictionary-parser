@@ -1,7 +1,9 @@
 const targetTypes = [ "명사", "형용사" ];
 
-let nouns = "value\n";
-let adjectives = "value\n";
+let headers = "value\n";
+
+let nouns = "";
+let adjectives = "";
 
 const valueSet = new Set();
 
@@ -62,11 +64,11 @@ document.getElementById('fileInput').addEventListener('change', async function(e
 });
 
 document.getElementById('saveNouns').addEventListener('click', function() {
-    appendToFile("nouns", nouns);
+    appendToFile("nouns", (headers + nouns));
 });
 
 document.getElementById('saveAdjectives').addEventListener('click', function() {
-    appendToFile("adjectives", adjectives);
+    appendToFile("adjectives", (headers + adjectives));
 });
 
 function appendToFile(type, value) {
