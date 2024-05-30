@@ -8,59 +8,61 @@ let adjectives = "";
 const valueSet = new Set();
 
 document.getElementById('fileInput').addEventListener('change', async function(event) {
-    const file = event.target.files[0];
+    const files = event.target.files;
 
     const nounsOutputElement = document.getElementById('nounsOutput');
     const adjectivesOutputElement = document.getElementById('adjectivesOutput');
 
     const minLength = document.getElementById('minLength').value;
 
-    oboe({
-        url: URL.createObjectURL(file),
-        method: 'GET',
-        withCredentials: false
-    })
-    .node('!.LexicalResource.Lexicon.LexicalEntry.*', function(chunk) {
-        try {
-            // 유형
-            const type = chunk.feat.filter(feat => feat.att === "partOfSpeech")[0].val;
-            if (!targetTypes.includes(type)) return;
-
-            // 단어
-            let value;
-            if (type === "명사") {
-                value = chunk.Lemma.feat.val;
-                if (value.endsWith("적")) return;       // 형용사적 명사 제외
-            } else if (type === "형용사") {
-                value = chunk.WordForm[1].feat.filter(feat => feat.att === "writtenForm")[0].val;
-            }
-
-            // Skip if value is too short
-            if (value.length < minLength) return;
-
-            if (valueSet.has(value)) {
-                return;
-            } else {
-                valueSet.add(value);
-
-                // Append each chunk to output
-                if (type === "명사") {
-                    nouns += value + "\n";
-                } else if (type === "형용사") {
-                    adjectives += value + "\n";
-                }
-            }
+    for (const file of files) {
+        oboe({
+            url: URL.createObjectURL(file),
+            method: 'GET',
+            withCredentials: false
+        })
+        .node('!.LexicalResource.Lexicon.LexicalEntry.*', function(chunk) {
+            try {
+                // 유형
+                const type = chunk.feat.filter(feat => feat.att === "partOfSpeech")[0].val;
+                if (!targetTypes.includes(type)) return;
     
-            nounsOutputElement.value = nouns;
-            adjectivesOutputElement.value = adjectives;
-        } catch (error) {
-            // do nothing
-        }
-    })
-    .done(function() {
-        // All data has been processed
-        console.log('All data has been processed');
-    });
+                // 단어
+                let value;
+                if (type === "명사") {
+                    value = chunk.Lemma.feat.val;
+                    if (value.endsWith("적")) return;       // 형용사적 명사 제외
+                } else if (type === "형용사") {
+                    value = chunk.WordForm[1].feat.filter(feat => feat.att === "writtenForm")[0].val;
+                }
+    
+                // Skip if value is too short
+                if (value.length < minLength) return;
+    
+                if (valueSet.has(value)) {
+                    return;
+                } else {
+                    valueSet.add(value);
+    
+                    // Append each chunk to output
+                    if (type === "명사") {
+                        nouns += value + "\n";
+                    } else if (type === "형용사") {
+                        adjectives += value + "\n";
+                    }
+                }
+        
+                nounsOutputElement.value = nouns;
+                adjectivesOutputElement.value = adjectives;
+            } catch (error) {
+                // do nothing
+            }
+        })
+        .done(function() {
+            // All data has been processed
+            console.log('All data has been processed');
+        });
+    }
 });
 
 document.getElementById('saveNouns').addEventListener('click', function() {
