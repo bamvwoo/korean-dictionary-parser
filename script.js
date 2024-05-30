@@ -107,4 +107,7 @@ function appendToFile(type, value) {
 
     // Remove link from body
     document.body.removeChild(link);
+
+    // Revoke URL
+    URL.revokeObjectURL(url);
 }
